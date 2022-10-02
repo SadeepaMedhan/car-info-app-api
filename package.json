@@ -1,0 +1,16 @@
+{
+  "name": "car-info-api",
+  "version": "1.0.0",
+  "description": "android app backend",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "nodemon": "nodemon app.js"
+  },
+  "author": "sadeepa",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.20"
+  }
+}
