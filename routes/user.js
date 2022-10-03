@@ -7,17 +7,18 @@ app.use(express.json())
 const User = require('../Models/user.models')
 
 router.get('/', async(req,res)=>{
+    console.log("get");
     try {
         const users = await User.find()
         res.send(users)
-        console.log("user get");
     } catch (error) {
         res.send(error)
     }
 })
 
 router.post('/', (req,res)=>{
-    const data = req.body
+    const data = req.body.formData
+    //console.log(data);
     const newUser = new User({
         name: data.name,
         email: data.email,
