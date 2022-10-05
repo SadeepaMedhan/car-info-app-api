@@ -7,7 +7,7 @@ app.use(express.json())
 const User = require('../Models/user.models')
 
 router.get('/', async(req,res)=>{
-    console.log("get");
+    //console.log("get");
     try {
         const users = await User.find()
         res.send(users)
@@ -27,15 +27,15 @@ router.post('/', (req,res)=>{
     });
     try {
         const response = newUser.save()
-        res.send("Saved!")
+        res.json("Saved!")
     } catch (error) {
-        res.send(error)
+        res.json(error)
     }
 })
 
 router.put('/:id', async(req,res)=>{
-    const data = req.body
-
+    const data = req.body.formData
+    console.log(data);
     try {
         const user = await User.findById(req.params.id)
         user.name = data.name,
@@ -44,9 +44,9 @@ router.put('/:id', async(req,res)=>{
         user.phone = data.phone
         const response = await user.save()
 
-        res.send("Updated!")
+        res.json("Updated!")
     } catch (error) {
-        res.send(error)
+        res.json(error)
     }
 })
 
@@ -54,18 +54,19 @@ router.delete('/:id', async(req,res)=>{
     try {
         const user = await User.findById(req.params.id)
         const response = user.remove()
-        res.send("Deleted!")
+        //console.log("del");
+        res.json("Deleted!")
     } catch (error) {
-        res.send(error)
+        res.json(error)
     }
 })
 
 router.get('/:id', async(req,res)=>{
     try {
         const user = await User.findById(req.params.id)
-        res.send(user)
+        res.json(user)
     } catch (error) {
-        res.send(error)
+        res.json(error)
     }
 })
 

@@ -21,6 +21,10 @@ const carSchema = new mongoose.Schema({
     img: {
         type: String,
         required: true
+    },
+    user_id: {
+        type: String,
+        required: true
     }
 })
 
