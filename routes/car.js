@@ -7,12 +7,43 @@ app.use(express.json())
 const Car = require('../Models/car.models')
 
 router.get('/', async (req, res) => {
+    try {
+        const cars = await Car.find()
+        res.json(cars)
+        //console.log("car get");
+    } catch (error) {
+        res.json(error)
+    }
+})
+
+router.get('/:id', async (req, res) => {
+    try {
+        const car = await Car.findById(req.params.id)
+        res.json(car)
+    } catch (error) {
+        res.json(error)
+    }
+})
+
+router.post('/', async (req, res) => {
     console.log(req.body);
     try {
-        const allCars = await Car.find()
-        if (req.body.type === "all") {
-            res.json(allCars)
+        if (req.body.type === "save") {
+            const data = req.body.data
+            console.log(data);
+            const newCar = new Car({
+                brand: data.brand,
+                reg_number: data.reg_number,
+                price: data.price,
+                description: data.description,
+                img: data.img,
+                user_id: data.user_id
+            });
+            const response = newCar.save()
+            res.json("Saved!")
+
         } else if (req.body.type === "user") {
+            const allCars = await Car.find()
             const selectCars = []
             allCars.map((car) => {
                 if (car.user_id === req.body.userId) {
@@ -27,37 +58,9 @@ router.get('/', async (req, res) => {
 })
 
 
-router.get('/:id', async (req, res) => {
-    try {
-        const car = await Car.findById(req.params.id)
-        res.json(car)
-    } catch (error) {
-        res.json(error)
-    }
-})
-
-
-router.post('/', (req, res) => {
-    const data = req.body.data
-    //console.log(data);
-    const newCar = new Car({
-        brand: data.brand,
-        reg_number: data.reg_number,
-        price: data.price,
-        description: data.description,
-        img: data.img,
-        user_id: data.user_id
-    });
-    try {
-        const response = newCar.save()
-        res.json("Saved!")
-    } catch (error) {
-        res.json(error)
-    }
-})
-
 router.put('/:id', async (req, res) => {
     const data = req.body.data
+    //console.log(req.params.id);
     //console.log(data);
 
     try {
