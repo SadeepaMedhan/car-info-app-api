@@ -26,11 +26,11 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     try {
         if (req.body.type === "save") {
             const data = req.body.data
-            console.log(data);
+            //console.log(data);
             const newCar = new Car({
                 brand: data.brand,
                 reg_number: data.reg_number,
@@ -60,7 +60,6 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const data = req.body.data
-    //console.log(req.params.id);
     //console.log(data);
 
     try {
@@ -73,7 +72,6 @@ router.put('/:id', async (req, res) => {
             car.user_id = data.user_id
 
         const response = await car.save()
-
         res.json("Updated!")
     } catch (error) {
         res.json(error)
